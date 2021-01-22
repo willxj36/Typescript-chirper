@@ -12,14 +12,14 @@ router.get('/:id?', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    let chirp: IChirp = req.body;
+    let chirp: Chirp = req.body;
     CreateChirp(chirp);
     res.sendStatus(200);
 })
 
 router.put('/:id', (req, res) => {
     let id = req.params.id;
-    let chirp: IChirp = req.body;
+    let chirp: Chirp = req.body;
     UpdateChirp(id, chirp);
     res.send('Chirp updated successfully!');
 })
@@ -30,7 +30,7 @@ router.delete('/:id', (req, res) => {
     res.send('Chirp deleted successfully!');
 })
 
-interface IChirp {
+interface Chirp {
     name: string,
     text: string
 }
