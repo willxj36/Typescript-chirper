@@ -1,46 +1,13 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import Navbar from './components/Navbar';
+import NewChirpBox from './components/NewChirpBox';
+import ChirpPanel from './components/ChirpPanel';
 
-// class App extends React.Component<IAppProps, IAppState> {
-// 	constructor(props: IAppProps) {
-// 		super(props);
-// 		this.state = {
-// 			name: null
-// 		};
-// 	}
+const App = () => {
+	const [newChirp, setNewChirp] = useState(false);
 
-// 	async componentDidMount() {
-// 		try {
-// 			let r = await fetch('/api/hello');
-// 			let name = await r.json();
-// 			this.setState({ name });
-// 		} catch (error) {
-// 			console.log(error);
-// 		}
-// 	}
-
-// 	render() {
-// 		return (
-// 			<main className="container my-5">
-// 				<h1 className="text-primary text-center">Hello {this.state.name}!</h1>
-// 			</main>
-// 		);
-// 	}
-// }
-
-// export interface IAppProps {}
-
-// export interface IAppState {
-// 	name: string;
-// }
-
-// export default App;
-
-
-const App = (props: AppProps) => {
-	const [chirps, setChirps] = useState<Chirp[]>([]);
-
-	useEffect(() => {
+	useEffect(() => { //probably need to delete this, but verify first
 		(async () => {
 			try {
 				const res = await fetch('/api/chirps');
@@ -52,8 +19,14 @@ const App = (props: AppProps) => {
 		})();
 	}, []);
 
+	const showNewChirp = () => {newChirp? setNewChirp(false) : setNewChirp(true);}
+
 	return (
-		//put frontend html here w/ router etc
+		<>
+			<Navbar showNewChirp={showNewChirp} />
+			<NewChirpBox />
+			<ChirpPanel />
+		</>
 	);
 };
 
