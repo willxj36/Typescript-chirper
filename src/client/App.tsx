@@ -1,40 +1,36 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import NewChirpBox from './components/NewChirpBox';
 import ChirpPanel from './components/ChirpPanel';
+import $ from 'jquery';
 
 const App = () => {
-	const [newChirp, setNewChirp] = useState(false);
+	const [chirps, setChirps] = useState([]);
 
-	useEffect(() => { //probably need to delete this, but verify first
+	useEffect(() => {
 		(async () => {
 			try {
-				const res = await fetch('/api/chirps');
-				const chirps = await res.json();
+				let chirps = await $.get('/api/chirps');
 				setChirps(chirps);
+				console.log(chirps);
 			} catch (error) {
 				console.log(error);
 			}
 		})();
 	}, []);
 
-	const showNewChirp = () => {newChirp? setNewChirp(false) : setNewChirp(true);}
-
 	return (
-		<>
-			<Navbar showNewChirp={showNewChirp} />
-			<NewChirpBox />
-			<ChirpPanel />
-		</>
+		<BrowserRouter>
+			<Navbar />
+			<Switch>
+				<Route component={NewChirpBox} />
+				<Route component={ChirpPanel} chirps={chirps} />
+				{/* <Route component={AdminOptions} /> */}
+			</Switch>
+		</BrowserRouter>
 	);
 };
-
-interface AppProps {}
-
-interface Chirp {
-    name: string,
-    text: string
-}
 
 export default App;

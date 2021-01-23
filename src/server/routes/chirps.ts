@@ -3,11 +3,15 @@ const { GetChirp, GetChirps, CreateChirp, UpdateChirp, DeleteChirp} = require('.
 const router = express.Router();
 
 router.get('/:id?', (req, res) => {
-    let id = req.params.id;
+    let id: string = req.params.id;
     if(id) {
-        res.json(GetChirp(id));
+        let obj = GetChirp(id);
+        let chirp = Object.entries(obj);
+        res.send(chirp);
     } else {
-        res.send(GetChirps());
+        let obj = GetChirps();
+        let chirps = Object.entries(obj);
+        res.send(chirps);
     }
 })
 
@@ -18,21 +22,21 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-    let id = req.params.id;
+    let id: string = req.params.id;
     let chirp: Chirp = req.body;
     UpdateChirp(id, chirp);
     res.send('Chirp updated successfully!');
 })
 
 router.delete('/:id', (req, res) => {
-    let id = req.params.id;
+    let id: string = req.params.id;
     DeleteChirp(id);
     res.send('Chirp deleted successfully!');
 })
 
 interface Chirp {
-    name: string,
-    text: string
+    "name": string,
+    "text": string
 }
 
 export default router;
