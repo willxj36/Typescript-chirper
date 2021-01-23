@@ -6,8 +6,7 @@ router.get('/:id?', (req, res) => {
     let id: string = req.params.id;
     if(id) {
         let obj = GetChirp(id);
-        let chirp = Object.entries(obj);
-        res.send(chirp);
+        res.send(obj);
     } else {
         let obj = GetChirps();
         let chirps = Object.entries(obj);
