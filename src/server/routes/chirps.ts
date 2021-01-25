@@ -34,8 +34,8 @@ router.delete('/:id', (req, res) => {
 })
 
 interface Chirp {
-    "name": string,
-    "text": string
+    name: string
+    text: string
 }
 
 export default router;
